@@ -1,6 +1,5 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2022 Adrienne Rio Wongso Atmojo riowongsoatmojo@gmail.com
 */
 package main
 

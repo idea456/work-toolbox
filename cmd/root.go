@@ -8,6 +8,7 @@ import (
 	"os"
 
 	notify "github.com/idea456/work-toolbox/cmd/notify"
+	remind "github.com/idea456/work-toolbox/cmd/remind"
 	"github.com/spf13/cobra"
 )
 
@@ -37,6 +38,7 @@ func Execute() {
 
 func addSubcommand() {
 	rootCmd.AddCommand(notify.NotifyCmd);
+	rootCmd.AddCommand(remind.RemindCmd);
 }
 
 func init() {
