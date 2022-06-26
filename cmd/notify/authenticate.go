@@ -2,6 +2,7 @@ package notify
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -103,15 +104,22 @@ func Authenticate() {
 	}
 
 	user := "me"
-	r, err := srv.Users.Labels.List(user).Do()
+	r, err := srv.Users.Threads.List(user).Q("from:notifications@github.com,label:inbox").Do();
 	if err != nil {
 		log.Fatalf("Unable to retrieve lables: %v", err)
 	}
 
-	fmt.Println("Labels:")
-	for _, l := range r.Labels {
-		fmt.Printf("- %s\n", l.Name)
+	for _, msg := range r.Threads {
+		// msgReq, _ := srv.Users.Messages.Get(user, msg.Id).Do();
+		fmt.Printf("- %s\n", msg.Id)
 	}
 
+	msgReq, _ := srv.Users.Threads.Get(user, "1818e9f50076c315").Do();
 
+	fmt.Println(msgReq.Messages[len(msgReq.Messages)- 1].Id)
+
+	mr, _ := srv.Users.Messages.Get(user, "1818e9f50076c315").Do();
+
+	decoded, _ := base64.URLEncoding.DecodeString(mr.Payload.Parts[0].Body.Data);
+	fmt.Println(string(decoded));
 }
